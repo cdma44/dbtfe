@@ -44,3 +44,14 @@ jobs:
       - name: Terraform Apply
   #        working-directory: ./Junior/INT-J-1/terraform
         run: terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}"
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+
+      - name: Lint Helm Chart
+        working-directory: ./Junior/INT-J-1/prerequisites/helm-chart
+        run: helm lint .
+
+#      - name: Template Helm Chart
+#        working-directory: ./Junior/INT-J-1/prerequisites/helm-chart
+#        run: helm template myapp . --set greetingMessage="Hello from Terraform!"

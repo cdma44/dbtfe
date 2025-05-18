@@ -1,0 +1,6 @@
+apiVersion: v2
+name: simple-config-app
+description: A basic Helm chart expecting a greeting (Prerequisite for INT-J-1).
+type: application
+version: 0.1.0
+appVersion: "1.0" # Generic app version

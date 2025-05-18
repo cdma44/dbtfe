@@ -1,0 +1,27 @@
+# Default values for simple-config-app (Prerequisite for INT-J-1).
+replicaCount: 1
+
+image:
+  repository: nginx # Using Nginx as a placeholder container
+  pullPolicy: IfNotPresent
+  tag: "1.25-alpine"
+
+# The greeting message is expected, provide a default or override via --set
+greeting: "Default Greeting from values.yaml"
+
+# Standard values below (can be simplified if needed)
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+securityContext: {}
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
