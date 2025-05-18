@@ -52,6 +52,6 @@ jobs:
         working-directory: ./Junior/INT-J-1/prerequisites/helm-chart
         run: helm lint .
 
-#      - name: Template Helm Chart
-#        working-directory: ./Junior/INT-J-1/prerequisites/helm-chart
-#        run: helm template myapp . --set greetingMessage="Hello from Terraform!"
+      - name: Template Helm Chart
+        working-directory: ./Junior/INT-J-1/prerequisites/helm-chart
+        run: helm template myapp . --set greetingMessage="Hello from Terraform!"
