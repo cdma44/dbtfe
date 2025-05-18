@@ -36,9 +36,10 @@ jobs:
           #      working-directory: ./Junior/INT-J-1/terraform
         run: terraform validate
 
+
       - name: Terraform plan
           #      working-directory: ./Junior/INT-J-1/terraform
-        run: terraform plan
+        run: terraform plan -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}"
 
       - name: Terraform Apply
   #        working-directory: ./Junior/INT-J-1/terraform
