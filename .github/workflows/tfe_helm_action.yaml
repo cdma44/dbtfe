@@ -1,0 +1,37 @@
+name: tfe-helm-actions
+
+on:
+  push:
+    branches:
+#      - main
+#      - feature/1.0
+      - master
+
+jobs:
+  tfe-gcp-helm-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: repo checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+         terraform_version: 1.5.7
+
+      - name: Set up GCP credentials
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Terraform Init
+  #      working-directory: ./Junior/INT-J-1/terraform
+        run: terraform init
+
+      - name: Terraform Apply
+  #        working-directory: ./Junior/INT-J-1/terraform
+        run: terraform apply -auto-approve -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="bucket_name=${{ secrets.GCS_BUCKET_NAME }}"

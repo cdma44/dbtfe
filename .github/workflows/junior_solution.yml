@@ -1,0 +1,13 @@
+name: Simple CI Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print message
+        run: echo "Workflow triggered for main branch"
