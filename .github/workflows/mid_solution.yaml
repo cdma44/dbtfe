@@ -56,7 +56,10 @@ jobs:
 
       - name: Terraform plan
         if: github.event_name == 'pull_request'
-        run: terraform plan
+        run: |
+          gcloud auth application-default login
+          terraform plan
+          
 
       - name: tfe apply
         if : github.event_name == 'push' && github.ref == 'refs/heads/main'
