@@ -1,20 +1,33 @@
-Name: tfe plan and apply
+name: terraform plan and apply
 
 on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
+#env:
+#  GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com full json key added
+#  DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com
 
 jobs:
   terraform:
     name: Terraform Plan and tfe apply
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+
+    defaults:
+      run:
+        working-directory: terraform/junior
+
     env:
-      TF_TOKEN_app_terraform_io: ${{ secrets.TFE_API_TOKEN }}  # Terraform Cloud API token
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}  # Terraform Cloud API
+#      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
 
     steps:
       - name: repo checkout
@@ -24,6 +37,21 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+
+      - name: Authenticate to GCP using WIF
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL }}
+
+#      - name: Authenticate to GCP using WIF
+#        uses: google-github-actions/auth@v2
+#        with:
+#          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+#          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Terraform Init
         run: terraform init
