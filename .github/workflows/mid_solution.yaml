@@ -14,6 +14,10 @@ jobs:
     name: Terraform Plan and tfe apply
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: terraform/Junior
+
     env:
       TF_TOKEN_app_terraform_io: ${{ secrets.TFE_API_TOKEN }}  # Terraform Cloud API token
 
