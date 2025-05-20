@@ -8,12 +8,9 @@ on:
   pull_request:
     branches:
       - main
-env:
-  GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com full json key added
-  DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com
-
-
-
+#env:
+#  GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com full json key added
+#  DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com
 
 jobs:
   terraform:
