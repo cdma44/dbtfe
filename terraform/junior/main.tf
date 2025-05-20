@@ -9,6 +9,7 @@ resource "google_storage_bucket" "db_junior_gcs_bucket" {
   # name     = "junior-bucket-${var.project_id}"   # with project id
   # name     = "junior-bucket-${var.project_id}-${random_id.bucket_suffix.hex}"  #with both random_id and project_id
   location                    = var.region
+  project                     = var.project_id
   force_destroy               = true
   uniform_bucket_level_access = true
   labels = {
