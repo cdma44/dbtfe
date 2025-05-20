@@ -1,9 +1,10 @@
-Name: tfe plan and apply
+Name: terraform plan and apply
 
 on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
