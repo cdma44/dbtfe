@@ -17,13 +17,17 @@ jobs:
     name: Terraform Plan and tfe apply
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+
     defaults:
       run:
         working-directory: terraform/junior
 
     env:
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}  # Terraform Cloud API
-      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+#      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
 
     steps:
       - name: repo checkout
