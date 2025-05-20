@@ -8,6 +8,12 @@ on:
   pull_request:
     branches:
       - main
+env:
+  GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com full json key added
+  DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com
+
+
+
 
 jobs:
   terraform:
@@ -29,6 +35,16 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+
+      - name: Set up GCP credentials
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL }}
+#          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+#          service_account: ${{ secrets.DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Terraform Init
         run: terraform init
