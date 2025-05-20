@@ -38,12 +38,17 @@ jobs:
         with:
           terraform_version: 1.6.6
 
-      - name: Set up GCP credentials
+      - name: Authenticate to GCP using WIF
         uses: google-github-actions/auth@v2
         with:
-#          credentials_json: ${{ secrets.GCP_CREDENTIALS}}
           workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL }}
+
+#      - name: Authenticate to GCP using WIF
+#        uses: google-github-actions/auth@v2
+#        with:
+#          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+#          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
@@ -56,10 +61,7 @@ jobs:
 
       - name: Terraform plan
         if: github.event_name == 'pull_request'
-        run: |
-          gcloud auth application-default login
-          terraform plan
-          
+        run: terraform plan
 
       - name: tfe apply
         if : github.event_name == 'push' && github.ref == 'refs/heads/main'
