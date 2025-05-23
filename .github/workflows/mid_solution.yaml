@@ -57,6 +57,11 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: gcloud check
+        run: |
+          gcloud auth list
+          gcloud projects list
+
       - name: Terraform Init
         run: terraform init
 
@@ -67,6 +72,6 @@ jobs:
 #        if: github.event_name == 'pull_request'
         run: terraform plan
 
-#      - name: tfe apply
+      - name: tfe apply
 #        if : github.event_name == 'push' && github.ref == 'refs/heads/main'
-#        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve
