@@ -13,6 +13,7 @@ on:
 #env:
 #  GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com full json key added
 #  DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com
+   DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL: gke-db@project-db-460412.iam.gserviceaccount.com
 
 jobs:
   terraform:
@@ -44,7 +45,8 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL }}
+          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+#          service_account: ${{ secrets.DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL }}
 
 #      - name: Authenticate to GCP using WIF
 #        uses: google-github-actions/auth@v2
