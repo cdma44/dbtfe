@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - mid_gke_check
 
   pull_request:
     branches:
       - main
+      - mid_gke_check
 #env:
 #  GCP_DB_CLOUDSTORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com full json key added
 #  DB_GCP_STORAGE_SERVICE_ACCOUNT_EMAIL : github-storage@project-db-460412.iam.gserviceaccount.com
@@ -23,7 +25,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/junior
+        working-directory: terraform/GKE
 
     env:
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}  # Terraform Cloud API
@@ -60,9 +62,9 @@ jobs:
         run: terraform validate
 
       - name: Terraform plan
-        if: github.event_name == 'pull_request'
+#        if: github.event_name == 'pull_request'
         run: terraform plan
 
-      - name: tfe apply
-        if : github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve
+#      - name: tfe apply
+#        if : github.event_name == 'push' && github.ref == 'refs/heads/main'
+#        run: terraform apply -auto-approve
