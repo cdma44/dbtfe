@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - mid_gke_check
+      - int_gke_secret
 
   pull_request:
     branches:
@@ -27,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/GKE
+        working-directory: terraform/INT2
 
     env:
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}  # Terraform Cloud API
