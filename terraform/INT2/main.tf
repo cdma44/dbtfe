@@ -29,12 +29,12 @@ module "gke" {
 }
 
 
-resource "google_secret_manager_secret_version" "my_secret_version" {
-  secret      = google_secret_manager_secret.my_secret.id
+resource "google_secret_manager_secret_version" "my_secret_int_version" {
+  secret      = google_secret_manager_secret.my_secret_int.id
   secret_data = var.api_key_secret_value
 }
 
-resource "google_secret_manager_secret" "my_secret" {
+resource "google_secret_manager_secret" "my_secret_int" {
   secret_id = "my-secret"
   replication {
     user_managed {
