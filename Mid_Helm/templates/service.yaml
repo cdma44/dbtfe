@@ -1,0 +1,11 @@
+apiVersion: v1
+Kind : Service
+metadata:
+  name: flask-service
+  spec:
+    type: ClusterIP
+    selector:
+      app: flask
+    ports:
+      - port: 80
+        targetPort: 8080

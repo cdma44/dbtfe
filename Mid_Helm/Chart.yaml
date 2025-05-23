@@ -1,0 +1,6 @@
+apiVersion: v2 #Helm chart API version (v2 is for Helm 3)
+name: flask-webapp
+description: A Helm chart for a simple Flask web application
+type: application
+version: 0.1.0     #helm version
+appVersion: "1.0"  #app/image tag version

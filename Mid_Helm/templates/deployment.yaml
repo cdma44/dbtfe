@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+  labels:
+    app: flask-deployment-label
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: pod-flask
+      template:
+        metadata:
+          annotations:
+            sidecar.istio.io/inject: "true"
+          labels:
+            app: pod-flask
+        spec:
+          containers:
+            - name: flask-webapp-container
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: "{ { .values.image.pullPolicy } }"
+              ports:
+                - containerPort: 8080
+              env:
+                - name: API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "mychart.fullname" . }}-secrets  #release-name-flask-webapp-secrets
+                      key: api-key
