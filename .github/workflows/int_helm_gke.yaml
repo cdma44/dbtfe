@@ -54,8 +54,8 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
-#      - name: Apply Terraform
-#        run: terraform apply -auto-approve
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
 
       - name: Get GKE credentials
         run: |
