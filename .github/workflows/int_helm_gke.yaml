@@ -21,6 +21,7 @@ jobs:
       K8S_SECRET_NAME: app-secrets
       K8S_SECRET_KEY: api-key
       K8S_NAMESPACE: default
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
     permissions:
       id-token: write
