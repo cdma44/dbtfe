@@ -22,7 +22,7 @@ module "gke" {
       machine_type = var.machine_type
       node_count = var.node_count
       min_count    = 1
-      max_count    = 3
+      max_count    = 2
       autoscaling = false
       auto_repair = true
       auto_upgrade = true
