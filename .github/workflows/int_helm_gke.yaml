@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    working-directory: terraform/INT2
 
     env:
       GOOGLE_PROJECT: project-db-460412
