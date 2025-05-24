@@ -3,3 +3,4 @@
 # cluster_name  = "db-cluster"
 # machine_type  = "e2-standard-2"
 # node_count    = 2
+api-key-secret

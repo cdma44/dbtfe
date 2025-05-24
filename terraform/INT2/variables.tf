@@ -12,7 +12,7 @@ variable "region" {
 
 variable "cluster_name" {
   type        = string
-  default     = "db-pool-cluster"
+  default     = "db-cluster"
   description = "Name of the GKE cluster"
 }
 

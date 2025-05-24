@@ -18,7 +18,7 @@ module "gke" {
 
   node_pools = [
     {
-      name       = "int-db-pool"
+      name       = "db-test-pool"
       machine_type = var.machine_type
       node_count = var.node_count
       autoscaling = false
@@ -28,14 +28,13 @@ module "gke" {
   ]
 }
 
-
-resource "google_secret_manager_secret_version" "my_secret_int_version" {
-  secret      = google_secret_manager_secret.my_secret_int.id
+resource "google_secret_manager_secret_version" "api_key_secret_version" {
+  secret      = google_secret_manager_secret.api_key_secret.id
   secret_data = var.api_key_secret_value
 }
 
-resource "google_secret_manager_secret" "my_secret_int" {
-  secret_id = "my_secret_int"
+resource "google_secret_manager_secret" "api_key_secret" {
+  secret_id = "api_key_secret"
   replication {
     user_managed {
       replicas {
@@ -47,4 +46,3 @@ resource "google_secret_manager_secret" "my_secret_int" {
     }
   }
 }
-
