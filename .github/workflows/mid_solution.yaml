@@ -77,3 +77,6 @@ jobs:
       - name: tfe apply
 #        if : github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
+
+      - name: tfe destroy
+        run: terraform destroy

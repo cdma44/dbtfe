@@ -1,0 +1,69 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_PROJECT: project-db-460412
+      GKE_CLUSTER: db-cluster
+      GKE_REGION: europe-west3
+      SECRET_NAME: api-key-secret
+      K8S_SECRET_NAME: app-secrets
+      K8S_SECRET_KEY: api-key
+      K8S_NAMESPACE: default
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+          project_id: ${{ env.GOOGLE_PROJECT }}
+
+      - name: Authenticate Docker with GCR
+        run: gcloud auth configure-docker
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Terraform validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+#      - name: Apply Terraform
+#        run: terraform apply -auto-approve
+#
+#      - name: Get GKE credentials
+#        run: |
+#          gcloud container clusters get-credentials $GKE_CLUSTER \
+#            --region $GKE_REGION \
+#            --project $GOOGLE_PROJECT
+#
+#      - name: Retrieve secret from Secret Manager
+#        id: secret
+#        run: |
+#          value=$(gcloud secrets versions access latest --secret=$SECRET_NAME)
+#          echo "::add-mask::$value"
+#          echo "SECRET_VALUE=$value" >> $GITHUB_ENV
+#
+#      - name: Create/Update Kubernetes Secret
+#        run: |
+#          kubectl create secret generic $K8S_SECRET_NAME \
+#            --from-literal=$K8S_SECRET_KEY=$SECRET_VALUE \
+#            --namespace $K8S_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+#
+#      - name: Deploy Helm Chart
+#        run: |
+#          helm upgrade --install my-release ./chart-directory \
+#            --namespace $K8S_NAMESPACE \
+#            --create-namespace
