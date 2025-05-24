@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - gke_helm_check
 
 jobs:
   deploy:
@@ -22,11 +23,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - name: Authenticate to GCP using WIF
+        uses: google-github-actions/auth@v2
         with:
-          service_account_key: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
-          project_id: ${{ env.GOOGLE_PROJECT }}
+          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Authenticate Docker with GCR
         run: gcloud auth configure-docker
