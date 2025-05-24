@@ -35,14 +35,14 @@ resource "google_secret_manager_secret_version" "my_secret_int_version" {
 }
 
 resource "google_secret_manager_secret" "my_secret_int" {
-  secret_id = "my-secret"
+  secret_id = "my_secret_int"
   replication {
     user_managed {
       replicas {
         location = "us-central1"
       }
       replicas {
-        location = "us-east1"
+        location = "europe-west3"
       }
     }
   }
