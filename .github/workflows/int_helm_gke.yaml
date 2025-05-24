@@ -39,7 +39,7 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.7 #
+          terraform_version: 1.5.7
 
       - name: Authenticate Docker with GCR
         run: gcloud auth configure-docker
@@ -53,8 +53,8 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
-#      - name: Apply Terraform
-#        run: terraform apply -auto-approve
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
 #
 #      - name: Get GKE credentials
 #        run: |
