@@ -70,6 +70,12 @@ jobs:
           echo "::add-mask::$value"
           echo "SECRET_VALUE=$value" >> $GITHUB_ENV
 
+      
+
+      - name: Install GKE Auth Plugin
+        run:
+          gcloud components install gke-gcloud-auth-plugin --quiet
+
       - name: Create/Update Kubernetes Secret
         run: |
           kubectl create secret generic $K8S_SECRET_NAME \
