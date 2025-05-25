@@ -1,0 +1,55 @@
+name: Reusable Terraform Workflow
+
+on:
+  workflow_call:
+    inputs:
+      tfe_command:
+        required: true
+        type: string
+        description: "Terraform command to run plan or apply"
+      working_directory:
+        required: true
+        type: string
+        description: "Working directory for Terraform"
+    secrets:
+      GOOGLE_CLOUD_PROJECT:
+        required: true
+      DB_GCP_WORKLOAD_IDENTITY_PROVIDER:
+        required: true
+      DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL:
+        required: true
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Needed for OIDC
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Authenticate to Google Cloud with WIF
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+#          token_format: access_token
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Terraform Init
+        working-directory: ${{ inputs.working_dir }}
+        run: terraform init
+
+      - name: Terraform Plan or Apply
+        working-directory: ${{ inputs.working_dir }}
+        run: terraform ${{ inputs.tfe_command }} -input=false -auto-approve
