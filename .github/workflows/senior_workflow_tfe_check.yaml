@@ -9,8 +9,8 @@ jobs:
   call-terraform:
     uses: ./.github/workflows/reusable_workflow.yaml
     with:
-      tf_command: apply
-      working_dir: terraform/senior
+      tfe_command: apply
+      working_directory: terraform/senior
     secrets:
       GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
       DB_GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
