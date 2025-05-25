@@ -114,9 +114,11 @@ jobs:
 #          ls -la ./helm
 
       - name: Deploy Helm Chart
-        working-directory: goal
+        working-directory: flask-webapp
         run: |
           pwd
           helm lint .
           helm template .
-          helm upgrade --install my-release goal --namespace $K8S_NAMESPACE --create-namespace
+#          helm upgrade --install my-release .  --dry-run --debug
+          helm upgrade --install my-release . --namespace $K8S_NAMESPACE --create-namespace
+
