@@ -79,11 +79,11 @@ jobs:
 #        ##          gke-gcloud-auth-plugin --version sudo apt-get update
 #        ##          sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 #        ##          gcloud components install gke-gcloud-auth-plugin --quiet
-#      - name: Authenticate to Google Cloud
-#        uses: google-github-actions/auth@v1
-#        with:
-#          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
-#          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
 
       - name: Get GKE credentials
         run: |
