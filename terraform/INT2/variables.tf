@@ -28,6 +28,12 @@ variable "node_count" {
   description = "Initial node count in the default node pool"
 }
 
+variable "node_location" {
+  type        = number
+  default     = "europe-west3-b"
+  description = " node pool node location restricted to one "
+}
+
 # Secret value (DO NOT hardcode in production)
 variable "api_key_secret_value" {
   description = "The API key stored in Secret Manager"

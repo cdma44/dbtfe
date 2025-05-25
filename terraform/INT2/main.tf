@@ -6,7 +6,7 @@ module "gke" {
   project_id = var.project_id
   name       = var.cluster_name
   region     = var.region
-  zones      = ["europe-west3-b"]
+  zones      = "europe-west3-b"
 
   network    = "default"
   subnetwork = "default"
@@ -24,7 +24,7 @@ module "gke" {
       name       = "db-test-pool"
       machine_type = var.machine_type
       node_count = var.node_count
-      node_locations = ["europe-west3-b"]
+      node_locations = var.node_location
       autoscaling = false
       auto_repair = true
       auto_upgrade = true
