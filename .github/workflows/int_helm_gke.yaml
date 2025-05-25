@@ -105,6 +105,6 @@ jobs:
 
       - name: Deploy Helm Chart
         run: |
-          helm upgrade --install my-release ./Mid_Helm
+          helm upgrade --install my-release Mid_Helm  
             --namespace $K8S_NAMESPACE \
             --create-namespace
