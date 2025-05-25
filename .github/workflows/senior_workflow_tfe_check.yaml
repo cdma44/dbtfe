@@ -1,17 +1,17 @@
-name: Senior Terraform check
-
-on:
-  push:
-    branches:
-      - senior_tfe_check
-
-jobs:
-  call-terraform:
-    uses: ./.github/workflows/reusable_workflow.yaml
-    with:
-      tfe_command: apply
-      working_directory: terraform/senior
-    secrets:
-      GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
-      DB_GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
-      DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+#name: Senior Terraform check
+#
+#on:
+#  push:
+#    branches:
+#      - senior_tfe_check
+#
+#jobs:
+#  call-terraform:
+#    uses: ./.github/workflows/reusable_workflow.yaml
+#    with:
+#      tfe_command: apply
+#      working_directory: terraform/senior
+#    secrets:
+#      GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+#      DB_GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+#      DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
