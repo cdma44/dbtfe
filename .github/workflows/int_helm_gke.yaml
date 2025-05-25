@@ -85,11 +85,11 @@ jobs:
 #          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
 #          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
 
-#      - name: Get GKE credentials
-#        run: |
-#          gcloud container clusters get-credentials $GKE_CLUSTER \
-#            --region $GKE_REGION \
-#            --project $GOOGLE_PROJECT
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials $GKE_CLUSTER \
+            --region $GKE_REGION \
+            --project $GOOGLE_PROJECT
 #      - name: Retrieve secret from Secret Manager
 #        id: secret
 #        run: |
