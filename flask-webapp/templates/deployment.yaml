@@ -57,5 +57,5 @@ spec:
             - name: API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "mychart.fullname" . }}-secrets
+                  name: app-secrets
                   key: api-key
