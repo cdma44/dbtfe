@@ -47,14 +47,11 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Terraform Init
-        working-directory: ${{ inputs.working_dir }}
+        working-directory: ${{ inputs.working_directory }}
         run: terraform init
 
-      - name: Debug Files
-        run: ls -R ${{ inputs.working_directory }}
-
       - name: Terraform Plan or Apply
-        working-directory: ${{ inputs.working_dir }}
+        working-directory: ${{ inputs.working_directory }}
         run: terraform ${{ inputs.tfe_command }} #-input=false -auto-approve
 
 
