@@ -10,8 +10,7 @@ module "gke" {
 
   network    = "default"
   subnetwork = "default"
-
-  deletion_protection = true
+  deletion_protection = false
 
   regional   = false
 
