@@ -5,6 +5,10 @@ on:
     branches:
       - senior_tfe_check
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   call-terraform:
     uses: ./.github/workflows/reusable_workflow.yaml
