@@ -114,11 +114,11 @@ jobs:
 #          ls -la ./helm
 
       - name: Deploy Helm Chart
-        working-directory: helm
+        working-directory: goal
         run: |
           pwd
           helm lint .
           helm template .
-          helm upgrade --install my-release ./helm \
+          helm upgrade --install my-release ./goal \
             --namespace $K8S_NAMESPACE \
             --create-namespace
