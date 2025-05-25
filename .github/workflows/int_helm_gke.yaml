@@ -103,8 +103,14 @@ jobs:
             --from-literal=$K8S_SECRET_KEY=$SECRET_VALUE \
             --namespace $K8S_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
 
+#      - name: Deploy Helm Chart
+#        run: |
+#          helm upgrade --install my-release./Mid_Helm
+#            --namespace $K8S_NAMESPACE \
+#            --create-namespace
+
       - name: Deploy Helm Chart
         run: |
-          helm upgrade --install my-release./Mid_Helm
+          helm upgrade --install my-release ./Mid_Helm \
             --namespace $K8S_NAMESPACE \
             --create-namespace
