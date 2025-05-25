@@ -6,9 +6,12 @@ module "gke" {
   project_id = var.project_id
   name       = var.cluster_name
   region     = var.region
+  zones      = ["europe-west3-b"]
 
   network    = "default"
   subnetwork = "default"
+
+  regional   = false
 
   ip_range_pods     = ""
   ip_range_services = ""
@@ -23,6 +26,7 @@ module "gke" {
       node_count = var.node_count
       min_count    = 1
       max_count    = 2
+      node_locations = ["europe-west3-b"]
       autoscaling = false
       auto_repair = true
       auto_upgrade = true
