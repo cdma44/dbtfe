@@ -7,9 +7,9 @@ on:
 
 jobs:
   call-terraform:
-    uses: .github/workflows/reusable_workflow.yaml
+    uses: ./.github/workflows/reusable_workflow.yaml
     with:
-      tfe_command: apply
+      tfe_command: plan
       working_directory: terraform/senior
     secrets:
       GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
