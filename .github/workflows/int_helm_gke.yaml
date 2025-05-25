@@ -114,7 +114,7 @@ jobs:
           ls -la ./helm
 
       - name: Deploy Helm Chart
-        working directory: helm
+        working-directory: helm
         run: |
           helm upgrade --install my-release ./helm \
             --namespace $K8S_NAMESPACE \
