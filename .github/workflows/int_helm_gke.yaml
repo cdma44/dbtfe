@@ -38,6 +38,7 @@ jobs:
           workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
           export_default_credentials: true
+          install_components: 'gke-gcloud-auth-plugin'
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
@@ -66,10 +67,10 @@ jobs:
 #          sudo mv /tmp/google-cloud-cli-gke-gcloud-auth-plugin*/bin/gke-gcloud-auth-plugin /usr/local/bin/
 #          chmod +x /usr/local/bin/gke-gcloud-auth-plugin
 
-      - name: Install GKE Auth Plugin via apt
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+#      - name: Install GKE Auth Plugin via apt
+#        run: |
+#          sudo apt-get update -y
+#          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
 
       - name: Get GKE credentials
         run: |
