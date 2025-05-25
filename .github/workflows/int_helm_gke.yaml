@@ -119,6 +119,6 @@ jobs:
           pwd
           helm lint .
           helm template .
-          helm upgrade --install my-release helm \
+          helm upgrade --install my-release ./helm \
             --namespace $K8S_NAMESPACE \
             --create-namespace
