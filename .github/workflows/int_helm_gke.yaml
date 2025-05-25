@@ -117,6 +117,8 @@ jobs:
         working-directory: helm
         run: |
           pwd
+          helm lint .
+          helm template .
           helm upgrade --install my-release helm \
             --namespace $K8S_NAMESPACE \
             --create-namespace
