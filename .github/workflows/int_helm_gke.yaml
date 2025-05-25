@@ -111,13 +111,12 @@ jobs:
       - name: Debug list repo root
         run: |
           ls -la
-          pwd
 
       - name: Debug list Mid_Helm
-        run: ls -la ./Mid_Helm
+        run: ls -la ./helm
 
       - name: Deploy Helm Chart
         run: |
-          helm upgrade --install my-release ./Mid_Helm \
+          helm upgrade --install my-release ./helm \
             --namespace $K8S_NAMESPACE \
             --create-namespace
