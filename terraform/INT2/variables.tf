@@ -29,7 +29,7 @@ variable "node_count" {
 }
 
 variable "node_location" {
-  type        = number
+  type        = string
   default     = "europe-west3-b"
   description = " node pool node location restricted to one "
 }
