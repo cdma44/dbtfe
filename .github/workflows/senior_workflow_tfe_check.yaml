@@ -13,8 +13,8 @@ jobs:
   call-terraform:
     uses: ./.github/workflows/reusable_workflow.yaml
     with:
-      tfe_command: validate
       working_directory: terraform/senior
+      tfe_command: plan
     secrets:
       GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
       DB_GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
