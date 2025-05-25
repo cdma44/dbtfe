@@ -24,8 +24,6 @@ module "gke" {
       name       = "db-test-pool"
       machine_type = var.machine_type
       node_count = var.node_count
-      min_count    = 1
-      max_count    = 2
       node_locations = ["europe-west3-b"]
       autoscaling = false
       auto_repair = true

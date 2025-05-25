@@ -18,13 +18,13 @@ variable "cluster_name" {
 
 variable "machine_type" {
   type        = string
-  default     = "e2-medium"
+  default     = "e2-standard-2"
   description = "Machine type for the node pool"
 }
 
 variable "node_count" {
   type        = number
-  default     = 3
+  default     = 2
   description = "Initial node count in the default node pool"
 }
 
