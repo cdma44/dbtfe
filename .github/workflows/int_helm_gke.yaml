@@ -112,12 +112,12 @@ jobs:
 #        run: |
 #          ls -la
 #          ls -la ./helm
+#  helm upgrade --install my-release .  --dry-run --debug
+
       - name: Deploy Helm Chart
         working-directory: flask-webapp
         run: |
           pwd
           helm lint .
           helm template .
-#          helm upgrade --install my-release .  --dry-run --debug
           helm upgrade --install my-release . --namespace $K8S_NAMESPACE --create-namespace
-
