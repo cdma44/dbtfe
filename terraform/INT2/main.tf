@@ -11,6 +11,8 @@ module "gke" {
   network    = "default"
   subnetwork = "default"
 
+  deletion_protection = true
+
   regional   = false
 
   ip_range_pods     = ""
