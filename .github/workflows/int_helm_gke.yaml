@@ -9,9 +9,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-#    defaults:
-#      run:
-#        working-directory: terraform/INT2
+    defaults:
+      run:
+        working-directory: terraform/INT2
 
     env:
       GOOGLE_PROJECT: project-db-460412
@@ -40,37 +40,37 @@ jobs:
           export_default_credentials: true
           install_components: gke-gcloud-auth-plugin
 
-#      - name: Set up Terraform
-#        uses: hashicorp/setup-terraform@v2
-#        with:
-#          terraform_version: 1.5.7
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
+      - name: Authenticate Docker with GCR
+        run: gcloud auth configure-docker
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Terraform validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
+
+      - name: Install GKE Auth Plugin
+        run: |
+          curl -sSL "https://dl.google.com/cloudsdk/channels/rapid/components/google-cloud-cli-gke-gcloud-auth-plugin.tar.gz" \
+            | tar -xz -C /tmp
+          sudo mv /tmp/google-cloud-cli-gke-gcloud-auth-plugin*/bin/gke-gcloud-auth-plugin /usr/local/bin/
+          chmod +x /usr/local/bin/gke-gcloud-auth-plugin
 #
-#      - name: Authenticate Docker with GCR
-#        run: gcloud auth configure-docker
-#
-#      - name: Initialize Terraform
-#        run: terraform init
-#
-#      - name: Terraform validate
-#        run: terraform validate
-#
-#      - name: Terraform Plan
-#        run: terraform plan
-#
-#      - name: Apply Terraform
-#        run: terraform apply -auto-approve
-#
-##      - name: Install GKE Auth Plugin
-##        run: |
-##          curl -sSL "https://dl.google.com/cloudsdk/channels/rapid/components/google-cloud-cli-gke-gcloud-auth-plugin.tar.gz" \
-##            | tar -xz -C /tmp
-##          sudo mv /tmp/google-cloud-cli-gke-gcloud-auth-plugin*/bin/gke-gcloud-auth-plugin /usr/local/bin/
-##          chmod +x /usr/local/bin/gke-gcloud-auth-plugin
-#
-##      - name: Install GKE Auth Plugin via apt
-##        run: |
-##          sudo apt-get update -y
-##          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
+      - name: Install GKE Auth Plugin via apt
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
 #
 #      - name: Install GKE Auth Plugin
 #        run:
@@ -90,34 +90,35 @@ jobs:
           gcloud container clusters get-credentials $GKE_CLUSTER \
             --region $GKE_REGION \
             --project $GOOGLE_PROJECT
-#      - name: Retrieve secret from Secret Manager
-#        id: secret
-#        run: |
-#          value=$(gcloud secrets versions access latest --secret=$SECRET_NAME)
-#          echo "::add-mask::$value"
-#          echo "SECRET_VALUE=$value" >> $GITHUB_ENV
-#
-#      - name: Create/Update Kubernetes Secret
-#        run: |
-#          kubectl create secret generic $K8S_SECRET_NAME \
-#            --from-literal=$K8S_SECRET_KEY=$SECRET_VALUE \
-#            --namespace $K8S_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
 
-#      - name: Deploy Helm Chart
-#        run: |
-#          helm upgrade --install my-release./Mid_Helm
-#            --namespace $K8S_NAMESPACE \
-#            --create-namespace
+      - name: Retrieve secret from Secret Manager
+        id: secret
+        run: |
+          value=$(gcloud secrets versions access latest --secret=$SECRET_NAME)
+          echo "::add-mask::$value"
+          echo "SECRET_VALUE=$value" >> $GITHUB_ENV
+
+      - name: Create/Update Kubernetes Secret
+        run: |
+          kubectl create secret generic $K8S_SECRET_NAME \
+            --from-literal=$K8S_SECRET_KEY=$SECRET_VALUE \
+            --namespace $K8S_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Deploy Helm Chart
+        run: |
+          helm upgrade --install my-release . \
+            --namespace $K8S_NAMESPACE \
+            --create-namespace
 #      - name: Debug list repo root
 #        run: |
 #          ls -la
 #          ls -la ./helm
 #  helm upgrade --install my-release .  --dry-run --debug
 
-      - name: Deploy Helm Chart
-        working-directory: flask-webapp
-        run: |
-          pwd
-          helm lint .
-          helm template .
-          helm upgrade --install my-release . --namespace $K8S_NAMESPACE --create-namespace
+#      - name: Deploy Helm Chart
+#        working-directory: flask-webapp
+#        run: |
+#          pwd
+#          helm lint .
+#          helm template .
+#          helm upgrade --install my-release . --namespace $K8S_NAMESPACE --create-namespace
