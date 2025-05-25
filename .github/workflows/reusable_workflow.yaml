@@ -52,4 +52,10 @@ jobs:
 
       - name: Terraform Plan or Apply
         working-directory: ${{ inputs.working_dir }}
+        run: terraform ${{ inputs.tfe_command }}
+
+      - name: Terraform Apply
+        working-directory: ${{ inputs.working_dir }}
         run: terraform ${{ inputs.tfe_command }} -input=false -auto-approve
+
+
