@@ -50,6 +50,9 @@ jobs:
         working-directory: ${{ inputs.working_dir }}
         run: terraform init
 
+      - name: Debug Files
+        run: ls -R ${{ inputs.working_directory }}
+
       - name: Terraform Plan or Apply
         working-directory: ${{ inputs.working_dir }}
         run: terraform ${{ inputs.tfe_command }} #-input=false -auto-approve
