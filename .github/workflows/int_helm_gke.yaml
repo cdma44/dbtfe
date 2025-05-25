@@ -75,6 +75,7 @@ jobs:
       - name: Install GKE Auth Plugin
         run:
           gke-gcloud-auth-plugin --version
+          gcloud config set account 'gke-db@project-db-460412.iam.gserviceaccount.com'
         ##          gke-gcloud-auth-plugin --version sudo apt-get update
         ##          sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
         ##          gcloud components install gke-gcloud-auth-plugin --quiet
@@ -83,7 +84,6 @@ jobs:
           gcloud container clusters get-credentials $GKE_CLUSTER \
             --region $GKE_REGION \
             --project $GOOGLE_PROJECT
-
       - name: Retrieve secret from Secret Manager
         id: secret
         run: |
