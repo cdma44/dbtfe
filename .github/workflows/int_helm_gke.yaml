@@ -60,13 +60,13 @@ jobs:
       - name: Apply Terraform
         run: terraform apply -auto-approve
 
-      - name: Install GKE Auth Plugin
-        run: |
-          curl -sSL "https://dl.google.com/cloudsdk/channels/rapid/components/google-cloud-cli-gke-gcloud-auth-plugin.tar.gz" \
-            | tar -xz -C /tmp
-          sudo mv /tmp/google-cloud-cli-gke-gcloud-auth-plugin*/bin/gke-gcloud-auth-plugin /usr/local/bin/
-          chmod +x /usr/local/bin/gke-gcloud-auth-plugin
-#
+#      - name: Install GKE Auth Plugin
+#        run: |
+#          curl -sSL "https://dl.google.com/cloudsdk/channels/rapid/components/google-cloud-cli-gke-gcloud-auth-plugin.tar.gz" \
+#            | tar -xz -C /tmp
+#          sudo mv /tmp/google-cloud-cli-gke-gcloud-auth-plugin*/bin/gke-gcloud-auth-plugin /usr/local/bin/
+#          chmod +x /usr/local/bin/gke-gcloud-auth-plugin
+
       - name: Install GKE Auth Plugin via apt
         run: |
           sudo apt-get update -y
@@ -105,6 +105,7 @@ jobs:
             --namespace $K8S_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Deploy Helm Chart
+        working-directory: flask-webapp
         run: |
           helm upgrade --install my-release . \
             --namespace $K8S_NAMESPACE \
