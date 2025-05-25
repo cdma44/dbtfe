@@ -6,7 +6,7 @@ module "gke" {
   project_id = var.project_id
   name       = var.cluster_name
   region     = var.region
-  zones      = "europe-west3-b"
+  zones      = ["europe-west3-b"]
 
   network    = "default"
   subnetwork = "default"
