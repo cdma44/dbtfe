@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   repository: ck12960/myflask
-  image: v1.0
+  tag: v1.0
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
