@@ -16,7 +16,7 @@ jobs:
     env:
       GOOGLE_PROJECT: project-db-460412
       GKE_CLUSTER: db-cluster
-      GKE_REGION: europe-west3
+      GKE_REGION: europe-west3-b
       SECRET_NAME: api-key-secret
       K8S_SECRET_NAME: app-secrets
       K8S_SECRET_KEY: api-key
@@ -62,13 +62,13 @@ jobs:
           gcloud container clusters get-credentials $GKE_CLUSTER \
             --region $GKE_REGION \
             --project $GOOGLE_PROJECT
-#
-#      - name: Retrieve secret from Secret Manager
-#        id: secret
-#        run: |
-#          value=$(gcloud secrets versions access latest --secret=$SECRET_NAME)
-#          echo "::add-mask::$value"
-#          echo "SECRET_VALUE=$value" >> $GITHUB_ENV
+
+      - name: Retrieve secret from Secret Manager
+        id: secret
+        run: |
+          value=$(gcloud secrets versions access latest --secret=$SECRET_NAME)
+          echo "::add-mask::$value"
+          echo "SECRET_VALUE=$value" >> $GITHUB_ENV
 #
 #      - name: Create/Update Kubernetes Secret
 #        run: |
