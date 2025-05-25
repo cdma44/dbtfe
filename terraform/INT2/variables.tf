@@ -34,6 +34,11 @@ variable "node_location" {
   description = " node pool node location restricted to one "
 }
 
+variable "deletion_protection" {
+  type        = bool
+  description = "Whether or not to allow Terraform to destroy the cluster."
+  default     = false
+}
 # Secret value (DO NOT hardcode in production)
 variable "api_key_secret_value" {
   description = "The API key stored in Secret Manager"
