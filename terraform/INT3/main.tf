@@ -51,7 +51,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
 resource "google_kms_key_ring" "cas_ring" {
   name     = "cas-keyring"
-  location = "us-central1"
+  location = var.location
 }
 
 resource "google_kms_crypto_key" "cas_key" {
@@ -69,7 +69,7 @@ resource "google_kms_crypto_key" "cas_key" {
 
 resource "google_privateca_ca_pool" "ca_pool" {
   name     = "sample-ca-pool"
-  location = "us-central1"
+  location = var.location
   tier     = "DEVOPS"
   publishing_options {
     publish_ca_cert = true
@@ -134,7 +134,7 @@ resource "google_service_account" "cas_issuer_sa" {
 # Allow this SA to request certificates from the CA Pool
 resource "google_privateca_ca_pool_iam_member" "issuer_binding" {
   ca_pool = google_privateca_ca_pool.ca_pool.id
-  location = "us-central1"
+  location = var.location
   role    = "roles/privateca.certificateRequester"
   member  = "serviceAccount:${google_service_account.cas_issuer_sa.email}"
 }

@@ -10,3 +10,9 @@ variable "region" {
   default     = "europe-west3"
   description = "Region for the GKE cluster"
 }
+
+variable "location" {
+  type        = string
+  default     = "us-central1"
+  description = "Region for the GKE cluster"
+}
