@@ -7,11 +7,11 @@ on:
 env:
   PROJECT_ID: project-db-460412
   REGION: europe-west3
-  CLUSTER_NAME: gke-wi-cluster
+  CLUSTER_NAME: db-cluster
   CA_POOL_NAME: cas-pool
   HOSTNAME: app.db.com
   GOOGLE_PROJECT: project-db-460412
-  GKE_CLUSTER: gke-wi-cluster
+  GKE_CLUSTER: db-cluster
   GKE_REGION: europe-west3-b
   SECRET_NAME: api_key_secret
   K8S_SECRET_NAME: app-secrets
