@@ -51,7 +51,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
 resource "google_kms_key_ring" "cas_ring" {
   name     = "cas-keyring"
-  location = "global"
+  location = "us-central1"
 }
 
 resource "google_kms_crypto_key" "cas_key" {
@@ -79,7 +79,7 @@ resource "google_privateca_ca_pool" "ca_pool" {
 }
 
 resource "google_privateca_certificate_authority" "self_signed_ca" {
-  location                  = "global"
+  location                  = "us-central1"
   pool                      = google_privateca_ca_pool.ca_pool.name
   certificate_authority_id  = "self-signed-ca"
   type                      = "SELF_SIGNED"
