@@ -14,6 +14,7 @@ resource "google_project_service" "container_api" {
   service = "container.googleapis.com"
 }
 
+
 # -------------------------------
 # GKE Cluster with Workload Identity
 # -------------------------------
@@ -144,3 +145,4 @@ resource "google_service_account_iam_member" "workload_identity_binding" {
   role               = "roles/iam.workloadIdentityUser"
   member             = "serviceAccount:${var.project_id}.svc.id.goog[cert-manager/cert-manager]"
 }
+
