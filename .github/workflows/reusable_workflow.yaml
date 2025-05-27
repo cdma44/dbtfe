@@ -63,7 +63,7 @@ jobs:
           terraform import google_privateca_ca_pool.ca_pool projects/project-db-460412/locations/us-central1/caPools/sample-ca-pool
           terraform import google_kms_key_ring.cas_ring projects/project-db-460412/locations/global/keyRings/cas-keyring
           terraform import google_kms_crypto_key.cas_key projects/project-db-460412/locations/global/keyRings/cas-keyring/cryptoKeys/cas-crypto-key
-          terraform import google_kms_key_ring.cas_ring projects/project-db-460412/locations/us-central1/keyRings/cas-keyring
+#          terraform import google_kms_key_ring.cas_ring projects/project-db-460412/locations/us-central1/keyRings/cas-keyring
 
       - name: Terraform Plan
         working-directory: ${{ inputs.working_directory }}
