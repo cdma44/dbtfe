@@ -54,8 +54,8 @@ resource "google_kms_key_ring" "cas_ring" {
   location = var.location
 }
 
-resource "google_kms_crypto_key" "cas_key" {
-  name            = "cas-crypto-key"
+resource "google_kms_crypto_key" "cas_key_1" {
+  name            = "cas-crypto-key-1"
   key_ring        = google_kms_key_ring.cas_ring.id
   rotation_period = "100000s"
 
