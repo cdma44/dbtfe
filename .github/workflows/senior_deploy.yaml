@@ -22,9 +22,9 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    default:
-      working-directory: terraform/senior
+    defaults:
+      run:
+        working-directory: terraform/senior
 
     permissions:
       id-token: write
