@@ -1,0 +1,166 @@
+name: Deploy GKE with CAS TLS
+
+on:
+  push:
+    branches: senior_tfe_check
+
+env:
+  PROJECT_ID: project-db-460412
+  REGION: europe-west3
+  CLUSTER_NAME: gke-wi-cluster
+  CA_POOL_NAME: cas-pool
+  HOSTNAME: app.db.com
+  GOOGLE_PROJECT: project-db-460412
+  GKE_CLUSTER: gke-wi-cluster
+  GKE_REGION: europe-west3-b
+  SECRET_NAME: api_key_secret
+  K8S_SECRET_NAME: app-secrets
+  K8S_SECRET_KEY: api-key
+  K8S_NAMESPACE: default
+  TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    working-directory: terraform/senior
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      #      - name: Authenticate to Google Cloud via Workload Identity Federation
+      #        uses: google-github-actions/auth@v2
+      #        with:
+      #          token_format: access_token
+      #          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      #          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Authenticate to GCP using WIF
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+          workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+          export_default_credentials: true
+          install_components: gke-gcloud-auth-plugin
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: terraform/senior
+        run: terraform init
+
+      - name: Terraform plan
+        working-directory: terraform/senior
+        run: terraform plan
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
+      #      - name: Authenticate Docker with GCR
+      #        run: gcloud auth configure-docker
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Terraform validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
+
+      #      - name: Install GKE Auth Plugin
+      #        run:
+      #          gke-gcloud-auth-plugin --version
+      #          gcloud config set account 'gke-db@project-db-460412.iam.gserviceaccount.com'
+
+      - name: Get GKE credentials
+        run: |
+          gcloud container clusters get-credentials $GKE_CLUSTER \
+                --region $GKE_REGION \
+                --project $GOOGLE_PROJECT
+  #
+  #
+
+  #          - name: Authenticate to Google Cloud
+  #            uses: google-github-actions/auth@v1
+  #            with:
+  #              workload_identity_provider: ${{ secrets.DB_GCP_WORKLOAD_IDENTITY_PROVIDER }}
+  #              service_account: ${{ secrets.DB_GCP_GKE_SERVICE_ACCOUNT_EMAIL }}
+#    - name: Retrieve secret from Secret Manager
+#            id: secret
+#            run: |
+#              value=$(gcloud secrets versions access latest --secret=$SECRET_NAME)
+#              echo "::add-mask::$value"
+#              echo "SECRET_VALUE=$value" >> $GITHUB_ENV
+#
+#          - name: Create/Update Kubernetes Secret
+#            run: |
+#              kubectl create secret generic $K8S_SECRET_NAME \
+#                --from-literal=$K8S_SECRET_KEY=$SECRET_VALUE \
+#                --namespace $K8S_NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+#
+#          - name: Deploy Helm Chart
+#            working-directory: flask-webapp
+#            run: |
+#              helm upgrade --install my-release . \
+#                --namespace $K8S_NAMESPACE \
+#                --create-namespace
+
+#      - name: Terraform Apply
+#        run: terraform apply -auto-approve
+#        working-directory: terraform/senior
+#        id: tf_apply
+
+#      - name: Extract CA Pool ID from Terraform output
+#        run: |
+#          echo "CA_POOL_ID=$(terraform output -raw ca_pool_id)" >> $GITHUB_ENV
+#        working-directory: terraform/senior
+#
+#      - name: Get GKE credentials
+#        run: gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION --project $PROJECT_ID
+#
+#      - name: Install istioctl
+#        run: |
+#          curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.22.0 sh -
+#          sudo mv istio-*/bin/istioctl /usr/local/bin/
+#
+#      - name: Install Istio (if not already installed)
+#        run: |
+#          istioctl install --set profile=default -y || echo "Istio may already be installed."
+#
+#      - name: Install Cert-Manager CRDs
+#        run: |
+#          kubectl apply --validate=false -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml
+#
+#      - name: Helm install Cert-Manager (if not installed)
+#        run: |
+#          helm repo add jetstack https://charts.jetstack.io
+#          helm repo update
+#          helm upgrade --install cert-manager jetstack/cert-manager \
+#            --namespace cert-manager --create-namespace \
+#            --version v1.14.2
+#
+#      - name: Helm install Istio App
+#        run: |
+#          helm upgrade --install myapp ./helm/istio-app \
+#            --namespace istio-system --create-namespace \
+#            --set projectID=${PROJECT_ID} \
+#            --set region=${REGION} \
+#            --set caPool=projects/${PROJECT_ID}/locations/${REGION}/caPools/${CA_POOL_NAME} \
+#            --set hostname=${HOSTNAME}
+
+

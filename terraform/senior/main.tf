@@ -4,7 +4,7 @@ provider "google" {
 }
 
 resource "google_storage_bucket" "senior_gcs_bucket" {
-  name                        = "senior-bucket"
+  name                        = "senior-bucket-test"
   # name     = "junior-bucket-${var.project_id}"   # with project id
   # name     = "junior-bucket-${var.project_id}-${random_id.bucket_suffix.hex}"  #with both random_id and project_id
   location                    = var.region
