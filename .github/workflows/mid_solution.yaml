@@ -28,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/INT2
+        working-directory: terraform/INT3
 
     env:
       TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}  # Terraform Cloud API
