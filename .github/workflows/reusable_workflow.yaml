@@ -54,15 +54,15 @@ jobs:
         working-directory: ${{ inputs.working_directory }}
         run: terraform validate #-input=false -auto-approve
 
-#      - name: Terraform import files
-#        working-directory: ${{ inputs.working_directory }}
-#        run: |
-#          terraform import google_container_cluster.primary projects/project-db-460412/locations/europe-west3/clusters/gke-wi-cluster
-#          terraform import google_service_account.cas_issuer_sa projects/project-db-460412/serviceAccounts/cert-manager-cas-issuer-sa@project-db-460412.iam.gserviceaccount.com
-#          terraform import google_container_node_pool.primary_nodes projects/project-db-460412/locations/europe-west3/clusters/gke-wi-cluster/nodePools/primary-node-pool
-#          terraform import google_privateca_ca_pool.ca_pool projects/project-db-460412/locations/us-central1/caPools/sample-ca-pool
-#          terraform import google_kms_key_ring.cas_ring projects/project-db-460412/locations/global/keyRings/cas-keyring
-#          terraform import google_kms_crypto_key.cas_key projects/project-db-460412/locations/global/keyRings/cas-keyring/cryptoKeys/cas-crypto-key
+      - name: Terraform import files
+        working-directory: ${{ inputs.working_directory }}
+        run: |
+          terraform import google_container_cluster.primary projects/project-db-460412/locations/europe-west3/clusters/gke-wi-cluster
+          terraform import google_service_account.cas_issuer_sa projects/project-db-460412/serviceAccounts/cert-manager-cas-issuer-sa@project-db-460412.iam.gserviceaccount.com
+          terraform import google_container_node_pool.primary_nodes projects/project-db-460412/locations/europe-west3/clusters/gke-wi-cluster/nodePools/primary-node-pool
+          terraform import google_privateca_ca_pool.ca_pool projects/project-db-460412/locations/us-central1/caPools/sample-ca-pool
+          terraform import google_kms_key_ring.cas_ring projects/project-db-460412/locations/global/keyRings/cas-keyring
+          terraform import google_kms_crypto_key.cas_key projects/project-db-460412/locations/global/keyRings/cas-keyring/cryptoKeys/cas-crypto-key
 
       - name: Terraform Plan
         working-directory: ${{ inputs.working_directory }}
