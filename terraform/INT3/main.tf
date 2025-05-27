@@ -63,7 +63,6 @@ resource "google_kms_crypto_key" "cas_key" {
     prevent_destroy = true
   }
 }
-
 # -------------------------------
 # CAS CA Pool and CA
 # -------------------------------
@@ -85,7 +84,8 @@ resource "google_privateca_certificate_authority" "self_signed_ca" {
   type                      = "SELF_SIGNED"
 
   key_spec {
-    cloud_kms_key_version = "${google_kms_crypto_key.cas_key.id}/cryptoKeyVersions/1"
+    # cloud_kms_key_version = "${google_kms_crypto_key.cas_key.id}/cryptoKeyVersions/1"
+    cloud_kms_key_version = "projects/project-db-460412/locations/global/keyRings/cas-keyring/cryptoKeys/cas-crypto-key/cryptoKeyVersions/1"
   }
 
   config {
