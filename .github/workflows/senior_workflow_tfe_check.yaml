@@ -3,7 +3,8 @@ name: Senior Terraform check
 on:
   push:
     branches:
-      - senior_tfe_check
+#      - senior_tfe_check
+      - main
 
 permissions:
   id-token: write
