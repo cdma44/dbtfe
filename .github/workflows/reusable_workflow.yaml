@@ -50,13 +50,17 @@ jobs:
         working-directory: ${{ inputs.working_directory }}
         run: terraform init
 
-      - name: Terraform Plan or Apply
+      - name: Terraform Validate
         working-directory: ${{ inputs.working_directory }}
         run: terraform validate #-input=false -auto-approve
 
-      - name: Terraform Plan or Apply
+      - name: Terraform Plan
         working-directory: ${{ inputs.working_directory }}
-        run: terraform ${{ inputs.tfe_command }} #-input=false -auto-approve
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: ${{ inputs.working_directory }}
+        run: terraform ${{ inputs.tfe_command }} -input=false -auto-approve
 
 
 
