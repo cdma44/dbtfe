@@ -79,7 +79,7 @@
 #
 # resource "google_privateca_certificate_authority" "self_signed_ca" {
 #   location                  = "us-central1"
-#   pool                      = google_privateca_ca_pool.ca_pool.name
+#   pool                      = "sample-ca-pool"
 #   certificate_authority_id  = "self-signed-ca"
 #   type                      = "SELF_SIGNED"
 #
