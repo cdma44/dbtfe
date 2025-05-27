@@ -13,7 +13,7 @@ jobs:
   call-terraform:
     uses: ./.github/workflows/reusable_workflow.yaml
     with:
-      working_directory: terraform/INT2
+      working_directory: terraform/INT3
       tfe_command: plan
     secrets:
       GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
