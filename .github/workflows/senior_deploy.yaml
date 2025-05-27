@@ -69,8 +69,8 @@ jobs:
         with:
           terraform_version: 1.5.7
 
-      #      - name: Authenticate Docker with GCR
-      #        run: gcloud auth configure-docker
+      - name: Authenticate Docker with GCR
+        run: gcloud auth configure-docker
 
       - name: Initialize Terraform
         run: terraform init
